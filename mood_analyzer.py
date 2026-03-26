@@ -9,6 +9,7 @@ This class starts with very simple logic:
   - Convert that score into a mood label
 """
 
+import string
 from typing import List, Dict, Tuple, Optional
 
 from dataset import POSITIVE_WORDS, NEGATIVE_WORDS
@@ -32,6 +33,8 @@ class MoodAnalyzer:
         self.positive_words = set(w.lower() for w in positive_words)
         self.negative_words = set(w.lower() for w in negative_words)
 
+        self.score = 0
+
     # ---------------------------------------------------------------------
     # Preprocessing
     # ---------------------------------------------------------------------
@@ -53,7 +56,22 @@ class MoodAnalyzer:
           - Normalize repeated characters ("soooo" -> "soo")
         """
         cleaned = text.strip().lower()
+        if not cleaned:
+          return []
+
+        # Keep common emoticons as standalone tokens before cleanup.
+        for icon in (":-)", ":-(", ":)", ":("):
+          cleaned = cleaned.replace(icon, f" {icon} ")
+
+        # Remove punctuation but keep apostrophes and emoticon symbols.
+        punctuation_to_remove = string.punctuation
+        for symbol in ("'", ":", "(", ")", "-"):
+          punctuation_to_remove = punctuation_to_remove.replace(symbol, "")
+
+        cleaned = cleaned.translate(str.maketrans({char: " " for char in punctuation_to_remove}))
         tokens = cleaned.split()
+
+        print(f"Preprocessed '{text}' to tokens: {tokens}")
 
         return tokens
 
@@ -83,6 +101,11 @@ class MoodAnalyzer:
         #
         # Hint: if you implement negation, you may want to look at pairs of tokens,
         # like ("not", "happy") or ("never", "fun").
+        for token in self.preprocess(text):
+            if token in self.positive_words:
+               score  +=1
+
+
         pass
 
     # ---------------------------------------------------------------------
@@ -151,3 +174,8 @@ class MoodAnalyzer:
             f"(positive: {positive_hits or '[]'}, "
             f"negative: {negative_hits or '[]'})"
         )
+
+
+if __name__ == "__main__":
+  analyzer = MoodAnalyzer()
+  analyzer.preprocess("  I love this class so much!!!  ")

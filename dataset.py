@@ -50,6 +50,12 @@ SAMPLE_POSTS = [
     "This is fine",
     "So excited for the weekend",
     "I am not happy about this",
+    "Lowkey stressed but kind of proud of myself",
+    "I absolutely love getting stuck in traffic",
+    "Had a great day at the park with friends :)",
+    "Ugh, I can't believe I have to work on a Saturday :(",
+    "Just got a promotion at work, but now I have so much more responsibility 🥲",
+    "I finished my homework and now I am making dinner."
 ]
 
 # Human labels for each post above.
@@ -65,6 +71,12 @@ TRUE_LABELS = [
     "neutral",   # "This is fine"
     "positive",  # "So excited for the weekend"
     "negative",  # "I am not happy about this"
+    "mixed",     # "Lowkey stressed but kind of proud of myself"
+    "negative",  # "I absolutely love getting stuck in traffic"
+    "positive",  # "Had a great day at the park with friends :)"
+    "negative",  # "Ugh, I can't believe I have to work on a Saturday :("
+    "mixed",     # "Just got a promotion at work, but now I have so much more responsibility 🥲"
+    "neutral",  # "I finished my homework and now I am making dinner."
 ]
 
 # TODO: Add 5-10 more posts and labels.
@@ -91,4 +103,4 @@ TRUE_LABELS = [
 # TRUE_LABELS.append("mixed")
 #
 # Remember to keep them aligned:
-#   len(SAMPLE_POSTS) == len(TRUE_LABELS)
+len(SAMPLE_POSTS) == len(TRUE_LABELS)
